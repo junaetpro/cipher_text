@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cipher test</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    
+    <section>
+        
+        <div class="container">
+            
+
+            <div class="contactForm">
+                <h2>Additive & swap(8 bit text only)</h2>
+               
+                <div class="formBox">
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="inputText" required>
+                        <span>Plain Text-(8 bit)</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="cipherText" required>
+                        <span>Cipher Swap Text</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="email" name="" id="key" required>
+                        <span>Key-(p)</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input type="submit" onclick="reverseSwap()" value="Swap(c)">
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input style="margin-top: -5px;" type="submit" onclick="encrypt()" value="Additive">
+                    </div>
+
+                    <div style="margin-top: -10px;" class="inputBox w50">
+                        <input  type="text" name="" id="reversedSwappedText" readonly>
+                        <span>c- Swap result result</span>
+                    </div>
+
+
+                   
+
+                    <div style="margin-top: -30px;" class="inputBox w50">
+                        <input  type="text" name="" id="encryptedText" readonly>
+                        <span>Additive result</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="reverseKey" required >
+                        <span>Key -(c)</span>
+                    </div>
+
+
+                    <div style="margin-top: -50px;" class="inputBox w50">
+                        <input type="submit" onclick="swap()" value="Swap(p)">
+                    </div>
+
+
+
+                    <div class="inputBox w50" style="margin-top: -30px;" >
+                        <input type="submit" onclick="decrypt()" value="Decrypt">
+                    </div>
+
+                    <div style="margin-top: -20px;" class="inputBox w50">
+                        <input type="text" name="" id="swappedText" readonly>
+                        <span>Swap result</span>
+                    </div>
+
+                    <div style="margin-top: -20px;" class="inputBox w50">
+                        <input type="text" name="" id="decryptedText" readonly>
+                        <span>Plain Text</span>
+                    </div>
+                </div>
+            </div>
+            <div class="main_btn">
+                <a href="index.html">
+                    <div class="back">
+                    <a href="index.html">Back</a>
+                </div>
+            </a>
+                
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        function encrypt() {
+          let inputText = document.getElementById('inputText').value;
+          let key = parseInt(document.getElementById('key').value);
+          let encryptedText = '';
+    
+          for (let i = 0; i < inputText.length; i++) {
+            let charCode = inputText.charCodeAt(i);
+            charCode = (charCode + key) % 256;
+            encryptedText += String.fromCharCode(charCode);
+          }
+    
+          document.getElementById('encryptedText').value = encryptedText;
+        }
+    
+        function swap() {
+          let encryptedText = document.getElementById('encryptedText').value;
+          let swappedText = '';
+    
+          let swapIndices = [6, 1, 3, 7, 8, 5, 4, 2];
+    
+          for (let i = 0; i < encryptedText.length; i++) {
+            swappedText += encryptedText.charAt(swapIndices[i] - 1);
+          }
+    
+          document.getElementById('swappedText').value = swappedText;
+        }
+    
+        function reverseSwap() {
+          let cipherText = document.getElementById('cipherText').value;
+          let reversedText = '';
+    
+          let swapIndices = [6, 1, 3, 7, 8, 5, 4, 2];
+    
+          for (let i = 0; i < cipherText.length; i++) {
+            let index = swapIndices.indexOf(i + 1);
+            reversedText += cipherText.charAt(index);
+          }
+    
+          document.getElementById('reversedSwappedText').value = reversedText;
+        }
+    
+        function decrypt() {
+          let swappedText = document.getElementById('reversedSwappedText').value;
+          let key = parseInt(document.getElementById('reverseKey').value);
+          let decryptedText = '';
+    
+          for (let i = 0; i < swappedText.length; i++) {
+            let charCode = swappedText.charCodeAt(i);
+            charCode = (charCode - key + 256) % 256;
+            decryptedText += String.fromCharCode(charCode);
+          }
+    
+          document.getElementById('decryptedText').value = decryptedText;
+        }
+      </script>
+</body>
+</html>

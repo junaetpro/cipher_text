@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cipher test</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    
+    <section>
+        
+        <div class="container">
+            
+
+            <div class="contactForm">
+                <h2>Additive Cipher</h2>
+               
+                <div class="formBox">
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="plainText" required>
+                        <span>Plain Text</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="inputCipherText" required>
+                        <span>Cipher Text</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="email" name="" id="key" required>
+                        <span>Key-(p)</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="inputKey" required >
+                        <span>Key</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <textarea name="" id="cipherText" readonly></textarea>
+                        <span>Converted cipher Text</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <textarea name="" id="decryptedText" readonly></textarea>
+                        <span>Converted Plain Text</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input type="submit" value="Encrypt" onclick="encrypt()">
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="submit" value="Decrypt" onclick="decrypt()">
+                    </div>
+                </div>
+            </div>
+            <div class="main_btn">
+                <a href="index.html">
+                    <div class="back">
+                    <a href="index.html">Back</a>
+                </div>
+            </a>
+                
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function encrypt() {
+      const plainText = document.getElementById('plainText').value.toUpperCase();
+      const key = parseInt(document.getElementById('key').value);
+      let cipherText = '';
+
+      for (let i = 0; i < plainText.length; i++) {
+        const charCode = plainText.charCodeAt(i);
+        if (charCode >= 65 && charCode <= 90) {
+          const encryptedCharCode = (charCode - 65 + key) % 26 + 65;
+          cipherText += String.fromCharCode(encryptedCharCode);
+        } else {
+          cipherText += plainText[i];
+        }
+      }
+
+      document.getElementById('cipherText').value = cipherText;
+    }
+
+    function decrypt() {
+      const cipherText = document.getElementById('inputCipherText').value.toUpperCase();
+      const key = parseInt(document.getElementById('inputKey').value);
+      let decryptedText = '';
+
+      for (let i = 0; i < cipherText.length; i++) {
+        const charCode = cipherText.charCodeAt(i);
+        if (charCode >= 65 && charCode <= 90) {
+          const decryptedCharCode = (charCode - 65 - key + 26) % 26 + 65;
+          decryptedText += String.fromCharCode(decryptedCharCode);
+        } else {
+          decryptedText += cipherText[i];
+        }
+      }
+
+      document.getElementById('decryptedText').value = decryptedText;
+    }
+    </script>
+</body>
+</html>

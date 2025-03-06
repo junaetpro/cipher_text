@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+    }
+  </style>
+  <title>Multiplicative Inverse Key</title>
+</head>
+<body>
+  <h2>Multiplicative Inverse Key</h2>
+  
+  <label for="encryptionKey">Enter Encryption Key:</label>
+  <input type="number" id="encryptionKey" placeholder="Enter encryption key">
+  <br>
+  <label for="alphabetSize">Enter Alphabet Size:</label>
+  <input type="number" id="alphabetSize" placeholder="Enter alphabet size">
+  <br>
+  <button onclick="calculateInverseKey()">Calculate Multiplicative Inverse Key</button>
+  <br>
+  <label for="inverseKey">Multiplicative Inverse Key:</label>
+  <input type="text" id="inverseKey" readonly>
+
+  <script>
+    function calculateInverseKey() {
+      const key = parseInt(document.getElementById('encryptionKey').value);
+      const alphabetSize = parseInt(document.getElementById('alphabetSize').value);
+
+      const inverseKey = findMultiplicativeInverse(key, alphabetSize);
+
+      document.getElementById('inverseKey').value = inverseKey !== -1 ? inverseKey : "Inverse doesn't exist";
+    }
+
+    function findMultiplicativeInverse(a, m) {
+      for (let i = 1; i < m; i++) {
+        if ((a * i) % m === 1) {
+          return i;
+        }
+      }
+      return -1; // Inverse doesn't exist
+    }
+  </script>
+</body>
+</html>

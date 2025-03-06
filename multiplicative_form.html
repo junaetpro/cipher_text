@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+    }
+  </style>
+  <title>Multiplicative Cipher</title>
+</head>
+<body>
+  <h2>Multiplicative Cipher</h2>
+  
+  <label for="plainText">Enter Plain Text:</label>
+  <input type="text" id="plainText" placeholder="Enter plain text">
+<br>
+  <label for="encryptionKey">Enter Encryption Key:</label>
+  <input type="number" id="encryptionKey" placeholder="Enter encryption key">
+<br>
+  <button onclick="encrypt()">Encrypt</button>
+<br>
+  <label for="cipherText">Cipher Text:</label>
+  <input type="text" id="cipherText" readonly>
+<br>
+  <label for="inverseKey">Multiplicative Inverse Key:</label>
+  <input type="text" id="inverseKey" readonly>
+
+  <hr>
+
+  <label for="inputCipherText">Enter Cipher Text:</label>
+  <input type="text" id="inputCipherText" placeholder="Enter cipher text">
+<br>
+  <label for="inverseKeyInput">Enter Multiplicative Inverse Key:</label>
+  <input type="text" id="inverseKeyInput">
+<br>
+
+
+  <button onclick="decrypt()">Decrypt</button>
+<br>
+
+  <label for="decryptedText">Decrypted Text:</label>
+  <input type="text" id="decryptedText" readonly>
+
+<br>
+<div class="back">
+    <a href="index.html">Back</a>
+</div>
+
+  <script>
+    function encrypt() {
+      const plainText = document.getElementById('plainText').value.toUpperCase();
+      const key = parseInt(document.getElementById('encryptionKey').value);
+      const alphabetSize = 26;
+
+      let cipherText = '';
+
+      for (let i = 0; i < plainText.length; i++) {
+        const charCode = plainText.charCodeAt(i) - 65; // Assuming uppercase letters only
+        const encryptedCharCode = (charCode * key) % alphabetSize;
+        const encryptedChar = String.fromCharCode(encryptedCharCode + 65);
+        cipherText += encryptedChar;
+      }
+
+      document.getElementById('cipherText').value = cipherText;
+      document.getElementById('inverseKey').value = findMultiplicativeInverse(key, alphabetSize);
+    }
+
+
+    
+
+    function decrypt() {
+      const cipherText = document.getElementById('inputCipherText').value.toUpperCase();
+      const inverseKey = parseInt(document.getElementById('inverseKeyInput').value);
+      const alphabetSize = 26;
+
+      let decryptedText = '';
+
+      for (let i = 0; i < cipherText.length; i++) {
+        const charCode = cipherText.charCodeAt(i) - 65; // Assuming uppercase letters only
+        const decryptedCharCode = (charCode * inverseKey) % alphabetSize;
+        const decryptedChar = String.fromCharCode((decryptedCharCode + 26) % 26 + 65);
+        decryptedText += decryptedChar;
+      }
+
+      document.getElementById('decryptedText').value = decryptedText;
+    }
+
+    function findMultiplicativeInverse(a, m) {
+      for (let i = 1; i < m; i++) {
+        if ((a * i) % m === 1) {
+          return i;
+        }
+      }
+      return -1; // Inverse doesn't exist
+    }
+  </script>
+</body>
+</html>

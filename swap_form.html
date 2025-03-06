@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="login.css">
+
+      <title>cipher</title>
+   </head>
+   <body>
+      <div class="login">
+         <img src="img/login-bg.png" alt="login image" class="login__img">
+
+         <div class="login__form">
+            <h1 class="login__title">Swap</h1>
+
+            <div class="login__content">
+               <div class="login__box">
+                  <div class="login__box-input">
+                     <input type="text"  class="login__input" id="inputText" placeholder=" ">
+                     <label for="login-email" class="login__label">Plain Text</label>
+                  </div>
+               </div>
+
+               
+
+               <div class="login__box">
+                  <div class="login__box-input">
+                     <input type="text" class="login__input" id="outputText" placeholder=" " readonly>
+                     <label for="login-pass" class="login__label">Cipher Text</label>
+                    
+                  </div>
+               </div>
+            </div>
+            <button type="submit" class="login__button login__button1" id="swapButton" onclick="swapText()">Submit</button>
+            <a href="index.html">
+                <button class="login__button">Back</button></a>
+            
+
+            
+        </div>
+      </div>
+      <script>
+        function swapText() {
+            // Get user input
+            const inputText = document.getElementById('inputText').value;
+
+            // Calculate middle index
+            const middleIndex = Math.floor(inputText.length / 2);
+
+            // Swap the two halves
+            const swappedText = inputText.slice(middleIndex) + inputText.slice(0, middleIndex);
+
+            // Display the result
+            document.getElementById('outputText').value = swappedText;
+        }
+    </script>
+   </body>
+</html>

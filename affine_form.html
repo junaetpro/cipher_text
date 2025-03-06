@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cipher test</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    
+    <section>
+        
+        <div class="container">
+            
+
+            <div class="contactForm">
+                <h2>Affine Cipher</h2>
+               
+                <div class="formBox">
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="plaintext" required>
+                        <span>Plain Text</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="ciphertext" required>
+                        <span>Cipher Text</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="key1" required>
+                        <span>Key-p(1)</span>
+                    </div>
+                    
+                    
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="key3" required>
+                        <span>Key-c(1)</span>
+                    </div>
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="key2" required>
+                        <span>Key-p(2)</span>
+                    </div>
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="key4" required>
+                        <span>Key-c(2)</span>
+                    </div>
+
+
+
+
+                    <div class="inputBox w50">
+                        <textarea name="" id="result" ></textarea>
+                        <span>Converted cipher Text</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <textarea name="" id="result2" ></textarea>
+                        <span>Converted Plain Text</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input type="submit" value="Encrypt" onclick="encrypt()">
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input type="submit" value="Decrypt" onclick="decrypt()">
+                    </div>
+                </div>
+            </div>
+            <div class="main_btn">
+                <a href="index.html">
+                    <div class="back">
+                    <a href="index.html">Back</a>
+                </div>
+            </a>
+                
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function modInverse(a, m) {
+            a = (a % m + m) % m;
+            for (let x = 1; x < m; x++) {
+                if ((a * x) % m == 1) {
+                    return x;
+                }
+            }
+            return 1;
+        }
+
+        function encrypt() {
+            const plaintext = document.getElementById('plaintext').value.toUpperCase();
+            const key1 = parseInt(document.getElementById('key1').value);
+            const key2 = parseInt(document.getElementById('key2').value);
+
+            let ciphertext = '';
+
+            for (let i = 0; i < plaintext.length; i++) {
+                if (plaintext[i] === ' ') {
+                    ciphertext += ' ';
+                } else {
+                    const charCode = plaintext.charCodeAt(i) - 65;
+                    const encryptedChar = String.fromCharCode((key1 * charCode + key2) % 26 + 65);
+                    ciphertext += encryptedChar;
+                }
+            }
+
+            document.getElementById('result').value = `${ciphertext}`;
+        }
+
+        function decrypt() {
+            const ciphertext = document.getElementById('ciphertext').value.toUpperCase();
+            const key3 = parseInt(document.getElementById('key3').value);
+            const key4 = parseInt(document.getElementById('key4').value);
+
+            const modInverseKey3 = modInverse(key3, 26);
+
+            let decryptedText = '';
+
+            for (let i = 0; i < ciphertext.length; i++) {
+                if (ciphertext[i] === ' ') {
+                    decryptedText += ' ';
+                } else {
+                    const charCode = ciphertext.charCodeAt(i) - 65;
+                    const decryptedChar = String.fromCharCode((modInverseKey3 * (charCode - key4 + 26)) % 26 + 65);
+                    decryptedText += decryptedChar;
+                }
+            }
+
+            document.getElementById('result2').value = `${decryptedText}`;
+        }
+    </script>
+</body>
+</html>

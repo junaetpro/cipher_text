@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="login.css">
+
+      <title>cipher</title>
+   </head>
+   <body>
+      <div class="login">
+         <img src="img/login-bg.png" alt="login image" class="login__img">
+
+         <div class="login__form">
+            <h1 class="login__title">Shift Left</h1>
+
+            <div class="login__content">
+               <div class="login__box">
+                  <div class="login__box-input">
+                     <input type="text"  class="login__input" id="inputText" placeholder=" ">
+                     <label for="login-email" class="login__label">Plain Text</label>
+                  </div>
+               </div>
+
+               <div class="login__box">
+                  <div class="login__box-input">
+                     <input type="text"  class="login__input" id="shiftNumber" placeholder=" ">
+                     <label for="login-email" class="login__label">Shift value</label>
+                  </div>
+               </div>
+
+               <div class="login__box">
+                  <div class="login__box-input">
+                     <input type="text"  class="login__input" id="outputText" placeholder=" " readonly>
+                     <label for="login-pass" class="login__label">Cipher Text</label>
+                    
+                  </div>
+               </div>
+            </div>
+            <button type="submit" class="login__button" onclick="shiftLeft()">Submit</button>
+            <a href="index.html">
+               <button class="login__button">Back</button></a>
+            
+        </div>
+      </div>
+      
+
+      <script>
+        function shiftLeft() {
+            const inputText = document.getElementById('inputText').value;
+            const shiftNumber = parseInt(document.getElementById('shiftNumber').value);
+
+            const shiftedText = shiftLeftString(inputText, shiftNumber);
+
+            document.getElementById('outputText').value = shiftedText;
+        }
+
+        function shiftLeftString(str, shift) {
+            const length = str.length;
+            const shiftAmount = shift % length;
+
+            const shiftedText = str.substring(shiftAmount) + str.substring(0, shiftAmount);
+
+            return shiftedText;
+        }
+    </script>
+   </body>
+</html>

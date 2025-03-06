@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cipher test</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    
+    <section>
+        
+        <div class="container">
+            
+
+            <div class="contactForm">
+                <h2>Multiplicative Cipher</h2>
+               
+                <div class="formBox">
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="plainText" required>
+                        <span>Plain Text</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="inputCipherText" required>
+                        <span>Enter Cipher Text:</span>
+                    </div>
+
+
+
+                    <div class="inputBox w50">
+                        <input type="email" name="" id="encryptionKey" required>
+                        <span>Encryption Key</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="inverseKeyInput" required>
+                        <span>Multiplicative Inv_Key:</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input style="margin-top: -5px;" type="submit" onclick="encrypt()" value="Encrypt">
+                    </div>
+
+                    <div class="inputBox w50">
+                        <input style="margin-top: -5px;" type="submit" onclick="decrypt()" value="Decrypt">
+                    </div>
+
+                    
+
+
+                   
+
+                    <div style="margin-top: -30px;" class="inputBox w50">
+                        <input  type="text" name="" id="cipherText" readonly>
+                        <span>Cipher Text:</span>
+                    </div>
+
+
+                    <div class="inputBox w50">
+                        <input type="text" name="" id="decryptedText">
+                        <span>Decrypted Text:</span>
+                    </div>
+
+
+                    
+
+                    <div style="margin-top: -20px;" class="inputBox w50">
+                        <input type="text" name="" id="inverseKey" readonly>
+                        <span>Multiplicative Inv_Key: </span>
+                    </div>
+
+                    
+                </div>
+            </div>
+            <div class="main_btn">
+                <a href="index.html">
+                    <div class="back">
+                    <a href="index.html">Back</a>
+                </div>
+            </a>
+                
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        function encrypt() {
+          const plainText = document.getElementById('plainText').value.toUpperCase();
+          const key = parseInt(document.getElementById('encryptionKey').value);
+          const alphabetSize = 26;
+    
+          let cipherText = '';
+    
+          for (let i = 0; i < plainText.length; i++) {
+            const charCode = plainText.charCodeAt(i) - 65; // Assuming uppercase letters only
+            const encryptedCharCode = (charCode * key) % alphabetSize;
+            const encryptedChar = String.fromCharCode(encryptedCharCode + 65);
+            cipherText += encryptedChar;
+          }
+    
+          document.getElementById('cipherText').value = cipherText;
+          document.getElementById('inverseKey').value = findMultiplicativeInverse(key, alphabetSize);
+        }
+    
+    
+        
+    
+        function decrypt() {
+          const cipherText = document.getElementById('inputCipherText').value.toUpperCase();
+          const inverseKey = parseInt(document.getElementById('inverseKeyInput').value);
+          const alphabetSize = 26;
+    
+          let decryptedText = '';
+    
+          for (let i = 0; i < cipherText.length; i++) {
+            const charCode = cipherText.charCodeAt(i) - 65; // Assuming uppercase letters only
+            const decryptedCharCode = (charCode * inverseKey) % alphabetSize;
+            const decryptedChar = String.fromCharCode((decryptedCharCode + 26) % 26 + 65);
+            decryptedText += decryptedChar;
+          }
+    
+          document.getElementById('decryptedText').value = decryptedText;
+        }
+    
+        function findMultiplicativeInverse(a, m) {
+          for (let i = 1; i < m; i++) {
+            if ((a * i) % m === 1) {
+              return i;
+            }
+          }
+          return -1; // Inverse doesn't exist
+        }
+      </script>
+</body>
+</html>
